@@ -1,0 +1,21 @@
+[Desktop Entry]
+Name=Minimal Status Notifier
+Comment=Runs a given command at regular intervals and will display a different icon depending on the return code.
+Icon=chronometer
+ 
+X-Plasma-API=declarativeappletscript
+X-Plasma-MainScript=ui/main.qml
+X-Plasma-DefaultSize=65,65
+ 
+X-KDE-PluginInfo-Author=Jason Schindler
+X-KDE-PluginInfo-Email=jschind@gmail.com
+X-KDE-PluginInfo-Website=http://www.bucket440.com
+X-KDE-PluginInfo-Category=Examples
+X-KDE-PluginInfo-Name=com.bucket440.qtquick.widget.min-status
+X-KDE-PluginInfo-Version=0.1
+ 
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+X-KDE-ServiceTypes=Plasma/Applet
+Type=Service
