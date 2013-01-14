@@ -6,6 +6,7 @@ Icon=chronometer
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
 X-Plasma-DefaultSize=65,65
+X-Plasma-RequiredExtensions=LaunchApp
  
 X-KDE-PluginInfo-Author=Jason Schindler
 X-KDE-PluginInfo-Email=jschind@gmail.com
