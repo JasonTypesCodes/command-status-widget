@@ -1,7 +1,7 @@
 import QtQuick 1.1
-import "../code/js/NotificationHelper.js" as NotificationHelper
-import "../code/js/CommandRunner.js" as CommandRunner
-import "../code/js/SettingsManager.js" as SettingsManager
+import org.kde.plasma.core 0.1 as PlasmaCore
+import "plasmapackage:/code/js/NotificationHelper.js" as NotificationHelper
+import "plasmapackage:/code/js/SettingsManager.js" as SettingsManager
 
 Item {  
   
@@ -11,9 +11,8 @@ Item {
     property string okImage: "plasmapackage:/images/ok.png"
     property string errorImage: "plasmapackage:/images/error.png"
     property string workingImage: "plasmapackage:/images/gear.png"
-    property bool isRunning: false
 
-    source: widgetImage.workingImage
+    source: workingImage
     anchors.centerIn: parent
     width: parent.width
     height: parent.height
@@ -24,28 +23,28 @@ Item {
       onClicked: widgetImage.go()
     }
 
-    Timer {
-      id: myTimer
-      interval: 3000; running: false; repeat: true
-      onTriggered: widgetImage.go()
+    PlasmaCore.DataSource {
+      id: execDataSource
+      engine: "executable"
+      interval: 0 //Don't run until everything has loaded...
+      onNewData: {
+        var result = data["exit code"];
+        if(result == 0){
+          widgetImage.source = widgetImage.okImage;
+          NotificationHelper.sendSuccessNotifiaction(sourceName);
+        } else if(result != 0){
+          widgetImage.source = widgetImage.errorImage;
+          NotificationHelper.sendFailureNotifiaction(sourceName);
+        }
+      }
     }
 
-    Component.onCompleted: myTimer.running = true
-
-    function go(){
-      if(!isRunning){
-        isRunning = true;
-        source = workingImage;
-        var result = CommandRunner.runCommand(SettingsManager.getCommandToRun());
-        if(result){
-          NotificationHelper.sendSuccessNotifiaction("MyCommand");
-          source = okImage;
-        } else {
-          NotificationHelper.sendFailureNotifiaction("MyCommand");
-          source = errorImage;
-        }
-        isRunning = false
-      }
+    Component.onCompleted: {
+      execDataSource.connectSource(
+        SettingsManager.getCommandToRun(),
+        execDataSource
+      );
+      execDataSource.interval = 2000;
     }
   }
 }
