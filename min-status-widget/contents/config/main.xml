@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="main"/>
+  <group name="General">
+    <entry name="name" type="String">
+      <whatsthis>The name you wish to give this item.</whatsthis>
+      <default>Echo Checker</default>
+    </entry>
+    <entry name="command" type="String">
+      <whatsthis>The command you wish to run.</whatsthis>
+      <default>echo "hi"</default>
+    </entry>
+    <entry name="pollingInterval" type="Int">
+      <whatsthis>Polling interval (in seconds).</whatsthis>
+      <default>120</default>
+    </entry>
+    <entry name="sendNotifications" type="Bool">
+      <whatsthis>Send Notifications?</whatsthis>
+      <default>false</default>
+    </entry>
+  </group>
+</kcfg>
+

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Minimal Status Notifier
+Name=Command Status Widget
 Comment=Runs a given command at regular intervals and will display a different icon depending on the return code.
 Icon=chronometer
  
@@ -12,7 +12,7 @@ X-KDE-PluginInfo-Author=Jason Schindler
 X-KDE-PluginInfo-Email=jschind@gmail.com
 X-KDE-PluginInfo-Website=http://www.bucket440.com
 X-KDE-PluginInfo-Category=Examples
-X-KDE-PluginInfo-Name=com.bucket440.qtquick.widget.min-status
+X-KDE-PluginInfo-Name=com.bucket440.qtquick.widget.command-status
 X-KDE-PluginInfo-Version=0.1
  
 X-KDE-PluginInfo-Depends=
