@@ -52,13 +52,12 @@ function readConfig(){
 }
 
 function resetToolTip(){
-  toolTip.toolTip = getName();
+  toolTip.toolTip = getName() + " Last Ran: " + formatDate(getLastRun());
 }
 
 function resetPoller(){
-  execDataSource.disconnectSource(getCommand());
   execDataSource.interval = getPollingInterval();
-  execDataSource.connectSource(getCommand());
+  execDataSource.connectedSources = [getCommand()];
 }
 
 function setLastRun(lastRun){
@@ -94,27 +93,31 @@ function setGlobal(globalName, value){
 }
 
 function executionComplete(sourceName, data){
+  setLastRun(new Date());
   var result = data["exit code"];
   if(result == 0){
     widgetImage.source = widgetImage.okImage;
     if(doNotification()){
-      sendSuccessNotifiaction(sourceName);
+      sendSuccessNotifiaction(getName());
     }
   } else {
     widgetImage.source = widgetImage.errorImage;
     if(doNotification()){
-      sendFailureNotifiaction(sourceName);
+      sendFailureNotifiaction(getName());
     }
   }
+  resetToolTip();
 }
 
-function sendNotification(summaryText, bodyText){
-  console.log("Sending notification: " + bodyText);
+function sendNotification(summaryText, bodyText, iconFile){
+  console.log("Sending notification!");
+  console.log("Summary: " + summaryText);
+  console.log("Body: " + bodyText);
   var service = dataEngine("notifications").serviceForSource("notification");
   var operation = service.operationDescription("createNotification");
   
   operation["appName"] = "Command-Status-Widget";
-  operation["appIcon"] = plasmoid.file("images", "ok.png");
+  operation["appIcon"] = iconFile;
   operation["summary"] = summaryText;
   operation["body"] = bodyText;
   operation["timeout"] = 3000;
@@ -125,14 +128,16 @@ function sendNotification(summaryText, bodyText){
 function sendSuccessNotifiaction(name){
   sendNotification(
     name + " Succeeded!", 
-    name + " command ran successfully."
+    name + " command ran successfully.",
+    plasmoid.file("images", "ok.png")
   );
 }
 
 function sendFailureNotifiaction(name){
   sendNotification(
     name + " Failed!", 
-    name + " command failed."
+    name + " command failed.",
+    plasmoid.file("images", "error.png")
   );
 }
 
@@ -141,5 +146,17 @@ function asBoolean(input){
     return false;
   } 
   return Boolean(input);
+}
+
+function formatDate(someDate){
+  if(someDate.getMonth){
+    return someDate.getFullYear() + "-" 
+            + (someDate.getMonth() + 1) + "-" 
+            + someDate.getDate() + " " 
+            + someDate.getHours() + ":" 
+            + someDate.getMinutes() + ":" 
+            + someDate.getSeconds();
+  }
+  return someDate;
 }
 
