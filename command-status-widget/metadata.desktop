@@ -11,7 +11,7 @@ X-Plasma-RequiredExtensions=LaunchApp
 X-KDE-PluginInfo-Author=Jason Schindler
 X-KDE-PluginInfo-Email=jschind@gmail.com
 X-KDE-PluginInfo-Website=http://www.bucket440.com
-X-KDE-PluginInfo-Category=Examples
+X-KDE-PluginInfo-Category=Utilities
 X-KDE-PluginInfo-Name=com.bucket440.qtquick.widget.command-status
 X-KDE-PluginInfo-Version=0.1
  
